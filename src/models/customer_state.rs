@@ -19,4 +19,8 @@ pub struct CustomerState {
 
     /// The benefits granted to the customer.
     pub granted_benefits: Vec<BenefitGrant>,
+
+    /// The URL to access the customer portal.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub customer_portal_url: Option<String>,
 }

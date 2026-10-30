@@ -8,6 +8,7 @@ use crate::{
     models::{
         ListParams, PaginatedResponse,
         customer::{CreateCustomerRequest, Customer, UpdateCustomerRequest},
+        customer_state::CustomerState,
     },
 };
 
@@ -69,5 +70,14 @@ impl PolarClient {
     /// Returns a paginated list of customers. Use `ListParams` to control pagination.
     pub async fn list_customers(&self, params: &ListParams) -> Result<PaginatedResponse<Customer>> {
         self.get_with_params("/customers/", params).await
+    }
+
+    /// Retrieve the state of a customer by their external ID.
+    pub async fn get_customer_state_by_external_id(
+        &self,
+        external_id: &str,
+    ) -> Result<CustomerState> {
+        self.get(&format!("/customers/external/{}/state", external_id))
+            .await
     }
 }
